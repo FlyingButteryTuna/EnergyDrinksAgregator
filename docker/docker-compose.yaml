@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  server:
+    image: nikita17th/server:latest
+    env_file:
+      - ./env-variables.env
+    ports:
+      - "8080:8080"
+    networks:
+      vpcbr:
+        ipv4_address: 173.18.0.2
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    env_file:
+      - ./env-variables.env
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./mongodb:/data/db
+    ports:
+      - "27017-27019:27017-27019"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo 10.10.10.60:27017/test --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      vpcbr:
+        ipv4_address: 173.18.0.3
+
+  data-aggregation:
+    image: nikita17th/data-aggregation:latest
+    env_file:
+      - env-variables.env
+    ports:
+      - "8081:8081"
+    networks:
+      vpcbr:
+        ipv4_address: 173.18.0.4
+
+  server-test:
+    image: nikita17th/server-test:latest
+    ports:
+      - "8084:8084"
+    networks:
+      vpcbr:
+        ipv4_address: 173.18.0.5
+
+volumes:
+  mongodb:
+
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 173.18.0.0/16
+          gateway: 173.18.0.1
+
+
