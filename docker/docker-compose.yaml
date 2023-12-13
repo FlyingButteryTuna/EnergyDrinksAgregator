@@ -4,7 +4,7 @@ services:
   server:
     image: nikita17th/server:latest
     env_file:
-      - ./env-variables.env
+      - env-variables.env
     ports:
       - "8080:8080"
     networks:
@@ -14,7 +14,7 @@ services:
     image: mongo
     container_name: mongodb
     env_file:
-      - ./env-variables.env
+      - env-variables.env
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - ./mongodb:/data/db
@@ -40,13 +40,6 @@ services:
       vpcbr:
         ipv4_address: 173.18.0.4
 
-  server-test:
-    image: nikita17th/server-test:latest
-    ports:
-      - "8084:8084"
-    networks:
-      vpcbr:
-        ipv4_address: 173.18.0.5
 
 volumes:
   mongodb:

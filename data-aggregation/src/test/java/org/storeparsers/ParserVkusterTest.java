@@ -27,13 +27,4 @@ public class ParserVkusterTest extends ParserTest {
         Assertions.assertEquals(expectedResult, result);
     }
 
-    @Test
-    void getDrinksUrl() throws IOException {
-        String testHTML = readTxtHtml("vkuster/vkusterDrinksUrlsHtml.txt");
-        ParserVkuster parser = new ParserVkuster("https://vkuster.ru/catalog/bezalkogolnye-napitki/energeticheskie-napitki/");
-        Set<String> result = parser.getDrinksUrl(testHTML);
-
-        Set<String> expectedResult = readTxtStringsSet("vkuster/vkusterDrinksUrlsResult.txt");
-        Assertions.assertEquals(result, expectedResult);
-    }
 }

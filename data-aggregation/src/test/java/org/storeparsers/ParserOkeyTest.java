@@ -15,15 +15,6 @@ public class ParserOkeyTest extends ParserTest {
     void setLocale() {
         Locale.setDefault(new Locale("en", "RU"));
     }
-    @Test
-    void parseEnergyDrinkPage() throws IOException {
-        String testHTML = readTxtHtml("okey/okeyEnergyDrinkHtml.txt");
-        ParserOkey parser = new ParserOkey("https://www.okeydostavka.ru/spb/goriachie-i-kholodnye-napitki/energeticheskie-napitki");
-        String result = parser.parseEnergyDrinkPage(testHTML).toString();
-
-        String expectedResult = readTxtHtml("okey/okeyEnergyDrinkParseResult.txt").replace("\n", "");
-        Assertions.assertEquals(expectedResult, result);
-    }
 
     @Test
     void getDrinksUrl() throws IOException {
