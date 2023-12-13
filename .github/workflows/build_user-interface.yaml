@@ -14,4 +14,4 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Build Docker image
-      run: docker build -t your-image-name:latest EnergyDrinkPrices/user-interface/.
+      run: docker build -t your-image-name:latest user-interface/.
